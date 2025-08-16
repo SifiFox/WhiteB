@@ -82,7 +82,7 @@ export interface CreateCommentData {
 }
 
 export interface LoginData {
-  email: string;
+  login: string;
   password: string;
 }
 

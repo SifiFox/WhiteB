@@ -1,8 +1,7 @@
 
 export const MENU_ITEMS = [
-  { title: 'Home', url: '/' },
-  { title: 'Posts', url: '/posts' },
-  { title: 'Users', url: '/users' },
+  { title: 'Главная', url: '/' },
+  { title: 'Посты', url: '/posts' },
 ];
 
 export const LOGO_CONFIG = {
