@@ -2,7 +2,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '../button/button';
 import { Input } from '../input';
-import { Label } from '../label';
+import { FormField } from '@/components/ui/forms/form-field';
 import { signUpSchema, type SignUpFormData } from '@/lib/schemas/schema-sign-up';
 import { useRegister } from '@/lib/hooks';
 import { Loader2 } from 'lucide-react';
@@ -50,8 +50,11 @@ export function FormSignUp({ onSuccess }: FormSignUpProps) {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <div className="grid grid-cols-2 gap-4">
-        <div className="space-y-2">
-          <Label htmlFor="name">Имя</Label>
+        <FormField
+          id="name"
+          label="Имя"
+          error={errors.name?.message}
+        >
           <Input
             id="name"
             placeholder="Иван Иванов"
@@ -59,13 +62,13 @@ export function FormSignUp({ onSuccess }: FormSignUpProps) {
             disabled={isSubmitting}
             aria-invalid={!!errors.name}
           />
-          {errors.name && (
-            <p className="text-sm text-destructive">{errors.name.message}</p>
-          )}
-        </div>
+        </FormField>
 
-        <div className="space-y-2">
-          <Label htmlFor="username">Username</Label>
+        <FormField
+          id="username"
+          label="Username"
+          error={errors.username?.message}
+        >
           <Input
             id="username"
             placeholder="ivan_ivanov"
@@ -73,14 +76,14 @@ export function FormSignUp({ onSuccess }: FormSignUpProps) {
             disabled={isSubmitting}
             aria-invalid={!!errors.username}
           />
-          {errors.username && (
-            <p className="text-sm text-destructive">{errors.username.message}</p>
-          )}
-        </div>
+        </FormField>
       </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="email">Email</Label>
+      <FormField
+        id="email"
+        label="Email"
+        error={errors.email?.message}
+      >
         <Input
           id="email"
           type="email"
@@ -89,13 +92,13 @@ export function FormSignUp({ onSuccess }: FormSignUpProps) {
           disabled={isSubmitting}
           aria-invalid={!!errors.email}
         />
-        {errors.email && (
-          <p className="text-sm text-destructive">{errors.email.message}</p>
-        )}
-      </div>
+      </FormField>
 
-      <div className="space-y-2">
-        <Label htmlFor="password">Пароль</Label>
+      <FormField
+        id="password"
+        label="Пароль"
+        error={errors.password?.message}
+      >
         <Input
           id="password"
           type="password"
@@ -104,13 +107,13 @@ export function FormSignUp({ onSuccess }: FormSignUpProps) {
           disabled={isSubmitting}
           aria-invalid={!!errors.password}
         />
-        {errors.password && (
-          <p className="text-sm text-destructive">{errors.password.message}</p>
-        )}
-      </div>
+      </FormField>
 
-      <div className="space-y-2">
-        <Label htmlFor="phone">Телефон</Label>
+      <FormField
+        id="phone"
+        label="Телефон"
+        error={errors.phone?.message}
+      >
         <Controller
           name="phone"
           control={control}
@@ -123,13 +126,13 @@ export function FormSignUp({ onSuccess }: FormSignUpProps) {
             />
           )}
         />
-        {errors.phone && (
-          <p className="text-sm text-destructive">{errors.phone.message}</p>
-        )}
-      </div>
+      </FormField>
 
-      <div className="space-y-2">
-        <Label htmlFor="website">Сайт (необязательно)</Label>
+      <FormField
+        id="website"
+        label="Сайт (необязательно)"
+        error={errors.website?.message}
+      >
         <Input
           id="website"
           placeholder="https://example.com"
@@ -137,13 +140,13 @@ export function FormSignUp({ onSuccess }: FormSignUpProps) {
           disabled={isSubmitting}
           aria-invalid={!!errors.website}
         />
-        {errors.website && (
-          <p className="text-sm text-destructive">{errors.website.message}</p>
-        )}
-      </div>
+      </FormField>
 
-      <div className="space-y-2">
-        <Label htmlFor="bio">О себе (необязательно)</Label>
+      <FormField
+        id="bio"
+        label="О себе (необязательно)"
+        error={errors.bio?.message}
+      >
         <Input
           id="bio"
           placeholder="Расскажите о себе..."
@@ -151,10 +154,7 @@ export function FormSignUp({ onSuccess }: FormSignUpProps) {
           disabled={isSubmitting}
           aria-invalid={!!errors.bio}
         />
-        {errors.bio && (
-          <p className="text-sm text-destructive">{errors.bio.message}</p>
-        )}
-      </div>
+      </FormField>
 
       {errors.root && (
         <p className="text-sm text-destructive">{errors.root.message}</p>

@@ -67,3 +67,16 @@ export function useIsAdmin() {
   const { data: user } = useCurrentUser();
   return user?.isAdmin ?? false;
 }
+
+export function useUpdateProfile() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (data: { id: number; updateData: any }) => {
+      return api.updateUser(data.id, data.updateData);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: authKeys.user });
+    },
+  });
+}

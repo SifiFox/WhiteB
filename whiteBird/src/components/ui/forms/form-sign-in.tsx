@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/button/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { FormField } from '@/components/ui/forms/form-field';
 import { signInSchema, type SignInFormData } from '@/lib/schemas/schema-sign-in';
 import { useLogin } from '@/lib/hooks';
 import { Loader2 } from 'lucide-react';
@@ -42,8 +42,11 @@ export function FormSignIn({ onSuccess }: FormSignInProps) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-      <div className="space-y-2">
-        <Label htmlFor="login">Email или логин</Label>
+      <FormField
+        id="login"
+        label="Email или логин"
+        error={errors.login?.message}
+      >
         <Input
           id="login"
           placeholder="example@email.com или username"
@@ -51,13 +54,13 @@ export function FormSignIn({ onSuccess }: FormSignInProps) {
           disabled={isSubmitting}
           aria-invalid={!!errors.login}
         />
-        {errors.login && (
-          <p className="text-sm text-destructive">{errors.login.message}</p>
-        )}
-      </div>
+      </FormField>
 
-      <div className="space-y-2">
-        <Label htmlFor="password">Пароль</Label>
+      <FormField
+        id="password"
+        label="Пароль"
+        error={errors.password?.message}
+      >
         <Input
           id="password"
           type="password"
@@ -66,10 +69,7 @@ export function FormSignIn({ onSuccess }: FormSignInProps) {
           disabled={isSubmitting}
           aria-invalid={!!errors.password}
         />
-        {errors.password && (
-          <p className="text-sm text-destructive">{errors.password.message}</p>
-        )}
-      </div>
+      </FormField>
 
       {errors.root && (
         <p className="text-sm text-destructive">{errors.root.message}</p>
