@@ -3,7 +3,7 @@ import { createLazyFileRoute, useSearch, useNavigate } from '@tanstack/react-rou
 import { usePosts } from '@/lib/hooks';
 import { useUsers } from '@/lib/hooks/use-users';
 import { withPostsAsyncState } from '@/components/hoc/with-async-state';
-import { PostPreview } from '@/components/widgets/post/post-preview';
+import { PostPreview } from '@/components/widgets/post';
 import { Button } from '@/components/ui/button';
 import { Combobox } from '@/components/ui/combobox';
 import { DialogCreatePost } from '@/components/ui/dialogs/dialog-create-post';
