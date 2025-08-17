@@ -1,6 +1,5 @@
 import { memo } from 'react';
 import { Link } from '@tanstack/react-router';
-import { useIsAdmin } from '@/lib/hooks/use-auth';
 
 interface NavbarProps {
   navLinks: { title: string; url: string }[];
@@ -9,18 +8,9 @@ interface NavbarProps {
 const Navbar = memo(({
   navLinks,
 }: NavbarProps) => {
-  const isAdminUser = useIsAdmin();
-
-  const filteredLinks = navLinks.filter((item) => {
-    if (item.url === '/users') {
-      return isAdminUser;
-    }
-    return true;
-  });
-
   return (
     <div className="flex items-center space-x-8">
-      {filteredLinks.map((item) => (
+      {navLinks.map((item) => (
         <Link
           key={item.title}
           to={item.url}

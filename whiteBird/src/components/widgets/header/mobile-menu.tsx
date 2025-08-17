@@ -3,24 +3,17 @@ import { Sheet, SheetContent, SheetTitle,  SheetHeader, SheetTrigger } from '@/c
 import { LOGO_CONFIG, MENU_ITEMS } from '@/lib/configs/navbar-config';
 import { Link } from '@tanstack/react-router';
 import { Menu } from 'lucide-react';
-import { AUTH_CONFIG } from '@/lib/configs/navbar-config';
-import { useIsAuthenticated, useLogout, useIsAdmin } from '@/lib/hooks/use-auth';
+import { DialogSignIn } from '@/components/ui/dialogs/dialog-sign-in';
+import { DialogSignUp } from '@/components/ui/dialogs/dialog-sign-up';
+import { useIsAuthenticated, useLogout } from '@/lib/hooks/use-auth';
 
 export const MobileMenu = () => {
   const isAuth = useIsAuthenticated();
   const logout = useLogout();
-  const isAdminUser = useIsAdmin();
 
   const handleLogout = () => {
     logout.mutate();
   };
-
-  const filteredLinks = MENU_ITEMS.filter((item) => {
-    if (item.url === '/users') {
-      return isAdminUser;
-    }
-    return true;
-  });
 
   return (
     <Sheet>
@@ -44,7 +37,7 @@ export const MobileMenu = () => {
         </SheetHeader>
         <div className="flex flex-col gap-6 p-4">
           <div className="flex flex-col space-y-4">
-            {filteredLinks.map((item) => (
+            {MENU_ITEMS.map((item) => (
               <Link
                 key={item.title}
                 to={item.url}
@@ -72,12 +65,8 @@ export const MobileMenu = () => {
               </>
             ) : (
               <>
-                <Button asChild variant="outline">
-                  <Link to={AUTH_CONFIG.login.url}>{AUTH_CONFIG.login.title}</Link>
-                </Button>
-                <Button asChild>
-                  <Link to={AUTH_CONFIG.signup.url}>{AUTH_CONFIG.signup.title}</Link>
-                </Button>
+                <DialogSignIn />
+                <DialogSignUp />
               </>
             )}
           </div>
