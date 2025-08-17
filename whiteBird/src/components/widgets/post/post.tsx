@@ -139,9 +139,10 @@ export function Post({ post }: PostProps) {
                     variant="ghost"
                     size="sm"
                     onClick={() => handleLike('like')}
-                    className={`gap-2 ${userLike?.type === 'like' ? 'text-green-600 bg-green-50' : ''}`}
+                    disabled={toggleLike.isPending}
+                    className={`gap-2 ${userLike?.type === 'like' ? 'text-green-600 bg-green-50' : ''} ${toggleLike.isPending ? 'opacity-70' : ''}`}
                   >
-                    <ThumbsUp className="h-4 w-4" />
+                    <ThumbsUp className={`h-4 w-4 ${toggleLike.isPending ? 'animate-pulse' : ''}`} />
                     <span>{post.likes}</span>
                   </Button>
 
@@ -149,9 +150,10 @@ export function Post({ post }: PostProps) {
                     variant="ghost"
                     size="sm"
                     onClick={() => handleLike('dislike')}
-                    className={`gap-2 ${userLike?.type === 'dislike' ? 'text-red-600 bg-red-50' : ''}`}
+                    disabled={toggleLike.isPending}
+                    className={`gap-2 ${userLike?.type === 'dislike' ? 'text-red-600 bg-red-50' : ''} ${toggleLike.isPending ? 'opacity-70' : ''}`}
                   >
-                    <ThumbsDown className="h-4 w-4" />
+                    <ThumbsDown className={`h-4 w-4 ${toggleLike.isPending ? 'animate-pulse' : ''}`} />
                     <span>{post.dislikes}</span>
                   </Button>
 
@@ -159,9 +161,10 @@ export function Post({ post }: PostProps) {
                     variant="ghost"
                     size="sm"
                     onClick={handleToggleFavorite}
-                    className={`gap-2 ${isFavorite ? 'text-red-600 bg-red-50' : ''}`}
+                    disabled={toggleFavorite.isPending}
+                    className={`gap-2 ${isFavorite ? 'text-red-600 bg-red-50' : ''} ${toggleFavorite.isPending ? 'opacity-70' : ''}`}
                   >
-                    <Heart className={`h-4 w-4 ${isFavorite ? 'fill-current' : ''}`} />
+                    <Heart className={`h-4 w-4 ${isFavorite ? 'fill-current' : ''} ${toggleFavorite.isPending ? 'animate-pulse' : ''}`} />
                     {isFavorite ? 'В избранном' : 'В избранное'}
                   </Button>
                 </>

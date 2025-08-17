@@ -170,13 +170,14 @@ export function PostPreview({ post }: PostPreviewProps) {
                     variant="ghost"
                     size="sm"
                     onClick={() => handleLike('like')}
+                    disabled={toggleLike.isPending}
                     className={`h-8 px-2 gap-1 ${
                       userLike?.type === 'like'
                         ? 'text-green-600 hover:text-green-700 bg-green-50 hover:bg-green-100'
                         : 'hover:text-green-600 hover:bg-green-50'
-                    }`}
+                    } ${toggleLike.isPending ? 'opacity-70' : ''}`}
                   >
-                    <ThumbsUp className="w-4 h-4" />
+                    <ThumbsUp className={`w-4 h-4 ${toggleLike.isPending ? 'animate-pulse' : ''}`} />
                     <span className="text-xs">{post.likes}</span>
                   </Button>
 
@@ -184,13 +185,14 @@ export function PostPreview({ post }: PostPreviewProps) {
                     variant="ghost"
                     size="sm"
                     onClick={() => handleLike('dislike')}
+                    disabled={toggleLike.isPending}
                     className={`h-8 px-2 gap-1 ${
                       userLike?.type === 'dislike'
                         ? 'text-red-600 hover:text-red-700 bg-red-50 hover:bg-red-100'
                         : 'hover:text-red-600 hover:bg-red-50'
-                    }`}
+                    } ${toggleLike.isPending ? 'opacity-70' : ''}`}
                   >
-                    <ThumbsDown className="w-4 h-4" />
+                    <ThumbsDown className={`w-4 h-4 ${toggleLike.isPending ? 'animate-pulse' : ''}`} />
                     <span className="text-xs">{post.dislikes}</span>
                   </Button>
 
@@ -198,13 +200,14 @@ export function PostPreview({ post }: PostPreviewProps) {
                     variant="ghost"
                     size="sm"
                     onClick={handleToggleFavorite}
+                    disabled={toggleFavorite.isPending}
                     className={`h-8 w-8 p-0 ${
                       isFavorite
                         ? 'text-red-600 hover:text-red-700 bg-red-50 hover:bg-red-100'
                         : 'hover:text-red-600 hover:bg-red-50'
-                    }`}
+                    } ${toggleFavorite.isPending ? 'opacity-70' : ''}`}
                   >
-                    <Heart className={`w-4 h-4 ${isFavorite ? 'fill-current' : ''}`} />
+                    <Heart className={`w-4 h-4 ${isFavorite ? 'fill-current' : ''} ${toggleFavorite.isPending ? 'animate-pulse' : ''}`} />
                   </Button>
                 </>
               ) : (

@@ -1,5 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '@/app/api/api';
+import type { Favorite } from '@/lib/types';
+import { toast } from 'sonner';
 
 export const favoriteKeys = {
   all: ['favorites'] as const,
@@ -30,6 +32,39 @@ export function useToggleFavorite() {
         return { action: 'added' as const };
       }
     },
+
+    onMutate: async ({ userId, postId }) => {
+      await queryClient.cancelQueries({ queryKey: favoriteKeys.byUser(userId) });
+
+      const previousFavorites = queryClient.getQueryData<Favorite[]>(favoriteKeys.byUser(userId)) || [];
+
+      const existingFavorite = previousFavorites.find(f => f.postId === postId);
+      let newFavorites: Favorite[];
+
+      if (existingFavorite) {
+        newFavorites = previousFavorites.filter(f => f.postId !== postId);
+      } else {
+        const newFavorite: Favorite = {
+          id: `temp-${Date.now()}`,
+          userId,
+          postId,
+        };
+        newFavorites = [...previousFavorites, newFavorite];
+      }
+
+      queryClient.setQueryData(favoriteKeys.byUser(userId), newFavorites);
+
+      return { previousFavorites };
+    },
+
+    onError: (_, { userId }, context) => {
+      if (context?.previousFavorites) {
+        queryClient.setQueryData(favoriteKeys.byUser(userId), context.previousFavorites);
+      }
+
+      toast.error('Не удалось обновить избранное. Попробуйте еще раз.');
+    },
+
     onSuccess: (_, { userId }) => {
       queryClient.invalidateQueries({ queryKey: favoriteKeys.byUser(userId) });
     },
