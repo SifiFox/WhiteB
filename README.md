@@ -104,3 +104,10 @@
 
 **Users page (available only for admin)**
 <img width="1537" height="816" alt="image" src="https://github.com/user-attachments/assets/9a62cace-da80-42ec-a301-64250c57a613" />
+
+**Registration**
+<img width="1573" height="642" alt="image" src="https://github.com/user-attachments/assets/9549fcfd-4e59-4335-be47-272f8cefeda5" />
+<img width="1546" height="512" alt="image" src="https://github.com/user-attachments/assets/ac07f638-f610-4123-852a-00d33da8ff9d" />
+
+**Login**
+<img width="1557" height="531" alt="image" src="https://github.com/user-attachments/assets/52e32058-4ec8-47fb-aa22-0e8763ffe34e" />
