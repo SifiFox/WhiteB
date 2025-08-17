@@ -31,6 +31,10 @@ export type PostsSearch = {
   userId?: string;
 };
 
+export interface PostDetailParams {
+  postId: string;
+}
+
 export interface Comment {
   id: string;
   postId: string;

@@ -11,8 +11,8 @@ export default defineConfig({
   plugins: [
     tailwindcss(),
     tanstackRouter({
-      target: 'react',
-      autoCodeSplitting: true,
+      routesDirectory: './src/routes',
+      generatedRouteTree: './src/routeTree.gen.ts',
     }),
     analyzer(),
     ViteMinifyPlugin({}),
