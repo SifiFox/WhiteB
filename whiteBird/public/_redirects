@@ -7,6 +7,7 @@
 # Static assets - должны обслуживаться как есть
 /assets/*  /assets/:splat  200
 /vite.svg  /vite.svg  200
+/favicon.svg  /favicon.svg  200
 
 # All other routes should fallback to index.html for client-side routing
 # This is the most important rule for SPA

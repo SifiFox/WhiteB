@@ -25,6 +25,12 @@
   status = 200
 
 [[redirects]]
+  # Favicon
+  from = "/favicon.svg"
+  to = "/favicon.svg"
+  status = 200
+
+[[redirects]]
   # All other routes should fallback to index.html for client-side routing
   # This is crucial for React Router / TanStack Router to work properly
   from = "/*"
