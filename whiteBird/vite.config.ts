@@ -3,6 +3,8 @@ import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import { tanstackRouter } from '@tanstack/router-plugin/vite';
 import path from 'path';
+import analyzer from 'vite-bundle-analyzer';
+import { ViteMinifyPlugin } from 'vite-plugin-minify';
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -12,6 +14,8 @@ export default defineConfig({
       target: 'react',
       autoCodeSplitting: true,
     }),
+    analyzer(),
+    ViteMinifyPlugin({}),
     react({
       babel: {
         plugins: ['babel-plugin-react-compiler'],
