@@ -1,0 +1,13 @@
+# Redirects for Single Page Application (SPA)
+# All routes should be handled by React Router client-side
+
+# API routes - если есть внешние API (можно добавить позже)
+# /api/*  https://your-api-domain.com/api/:splat  200
+
+# Static assets - должны обслуживаться как есть
+/assets/*  /assets/:splat  200
+/vite.svg  /vite.svg  200
+
+# All other routes should fallback to index.html for client-side routing
+# This is the most important rule for SPA
+/*  /index.html  200
