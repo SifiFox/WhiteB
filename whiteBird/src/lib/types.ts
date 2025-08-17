@@ -1,5 +1,5 @@
 export interface User {
-  id: number;
+  id: string;
   name: string;
   username: string;
   email: string;
@@ -14,10 +14,10 @@ export interface User {
 }
 
 export interface Post {
-  id: number;
+  id: string;
   title: string;
   body: string;
-  userId: number;
+  userId: string;
   createdAt: string;
   updatedAt: string;
   likes: number;
@@ -27,10 +27,14 @@ export interface Post {
   imageUrl?: string;
 }
 
+export type PostsSearch = {
+  userId?: string;
+};
+
 export interface Comment {
-  id: number;
-  postId: number;
-  userId: number;
+  id: string;
+  postId: string;
+  userId: string;
   name: string;
   email: string;
   body: string;
@@ -40,20 +44,20 @@ export interface Comment {
 }
 
 export interface Favorite {
-  id: number;
-  userId: number;
-  postId: number;
+  id: string;
+  userId: string;
+  postId: string;
 }
 
 export interface Like {
-  id: number;
-  userId: number;
-  postId: number;
+  id: string;
+  userId: string;
+  postId: string;
   type: 'like' | 'dislike';
 }
 
 export interface Tag {
-  id: number;
+  id: string;
   name: string;
   color: string;
 }
@@ -68,14 +72,14 @@ export interface PostWithUser extends Post {
 export interface CreatePostData {
   title: string;
   body: string;
-  userId: number;
+  userId: string;
   tags: string[];
   imageUrl?: string;
 }
 
 export interface CreateCommentData {
-  postId: number;
-  userId: number;
+  postId: string;
+  userId: string;
   name: string;
   email: string;
   body: string;

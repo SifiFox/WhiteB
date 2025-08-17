@@ -12,7 +12,7 @@ interface UsersListProps {
 
 function UsersList({ users }: UsersListProps) {
   return (
-    <div className="container mx-auto p-6">
+    <div className="container mx-auto p-6 max-w-4xl">
       <div className="flex justify-between items-center mb-8">
         <div>
           <h1 className="text-3xl font-bold">Управление пользователями</h1>

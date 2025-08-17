@@ -14,11 +14,9 @@ import type {
   AuthUser,
 } from '@/lib/types';
 
-const API_BASE_URL = 'http://localhost:3001';
-
 export const api = {
   async request<T>(endpoint: string, options?: RequestInit): Promise<T> {
-    const url = `${API_BASE_URL}${endpoint}`;
+    const url = `${import.meta.env.VITE_API_URL}${endpoint}`;
     const config: RequestInit = {
       headers: {
         'Content-Type': 'application/json',
@@ -36,8 +34,8 @@ export const api = {
   },
 
   getUsers: () => api.request<User[]>('/users'),
-  getUserById: (id: number) => api.request<User>(`/users/${id}`),
-  updateUser: (id: number, data: UpdateUserData) =>
+  getUserById: (id: string) => api.request<User>(`/users/${id}`),
+  updateUser: (id: string, data: UpdateUserData) =>
     api.request<User>(`/users/${id}`, {
       method: 'PATCH',
       body: JSON.stringify(data),
@@ -54,7 +52,7 @@ export const api = {
     return api.request<Post[]>(`/posts${query ? `?${query}` : ''}`);
   },
 
-  getPostById: (id: number) => api.request<Post>(`/posts/${id}`),
+  getPostById: (id: string) => api.request<Post>(`/posts/${id}`),
 
   createPost: (data: CreatePostData) => {
     const newPost = {
@@ -71,7 +69,7 @@ export const api = {
     });
   },
 
-  updatePost: (id: number, data: Partial<Post>) =>
+  updatePost: (id: string, data: Partial<Post>) =>
     api.request<Post>(`/posts/${id}`, {
       method: 'PATCH',
       body: JSON.stringify({
@@ -80,10 +78,10 @@ export const api = {
       }),
     }),
 
-  deletePost: (id: number) =>
+  deletePost: (id: string) =>
     api.request(`/posts/${id}`, { method: 'DELETE' }),
 
-  getCommentsByPostId: (postId: number) =>
+  getCommentsByPostId: (postId: string) =>
     api.request<Comment[]>(`/comments?postId=${postId}`),
 
   createComment: (data: CreateCommentData) => {
@@ -99,36 +97,36 @@ export const api = {
     });
   },
 
-  getFavorites: (userId: number) =>
+  getFavorites: (userId: string) =>
     api.request<Favorite[]>(`/favorites?userId=${userId}`),
 
-  addToFavorites: (userId: number, postId: number) =>
+  addToFavorites: (userId: string, postId: string) =>
     api.request<Favorite>('/favorites', {
       method: 'POST',
       body: JSON.stringify({ userId, postId }),
     }),
 
-  removeFromFavorites: (favoriteId: number) =>
+  removeFromFavorites: (favoriteId: string) =>
     api.request(`/favorites/${favoriteId}`, { method: 'DELETE' }),
 
-  getLikes: (postId?: number) => {
+  getLikes: (postId?: string) => {
     const query = postId ? `?postId=${postId}` : '';
     return api.request<Like[]>(`/likes${query}`);
   },
 
-  createLike: (userId: number, postId: number, type: 'like' | 'dislike') =>
+  createLike: (userId: string, postId: string, type: 'like' | 'dislike') =>
     api.request<Like>('/likes', {
       method: 'POST',
       body: JSON.stringify({ userId, postId, type }),
     }),
 
-  updateLike: (id: number, type: 'like' | 'dislike') =>
+  updateLike: (id: string, type: 'like' | 'dislike') =>
     api.request<Like>(`/likes/${id}`, {
       method: 'PATCH',
       body: JSON.stringify({ type }),
     }),
 
-  deleteLike: (id: number) =>
+  deleteLike: (id: string) =>
     api.request(`/likes/${id}`, { method: 'DELETE' }),
 
   getTags: () => api.request<Tag[]>('/tags'),
@@ -141,7 +139,7 @@ export const api = {
       const userId = token.replace('fake-jwt-token-', '');
       if (!userId || isNaN(Number(userId))) return null;
 
-      const user = await api.getUserById(Number(userId));
+      const user = await api.getUserById(userId);
       const { password: _password, ...authUser } = user;
       void _password;
 

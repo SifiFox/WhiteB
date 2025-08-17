@@ -81,3 +81,11 @@ export const withCommentsAsyncState = <T extends object>(Component: ComponentTyp
     errorMessage: 'Ошибка загрузки комментариев',
     minHeight: 'min-h-[200px]',
   });
+
+export const withPostDetailAsyncState = <T extends object>(Component: ComponentType<T>) =>
+  withAsyncState(Component, {
+    loadingMessage: 'Загрузка поста...',
+    errorMessage: 'Пост не найден',
+    minHeight: 'min-h-[400px]',
+    showErrorDetails: false,
+  });

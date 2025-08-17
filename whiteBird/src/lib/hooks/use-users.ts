@@ -8,7 +8,7 @@ export const userKeys = {
   lists: () => [...userKeys.all, 'list'] as const,
   list: (filters: Record<string, unknown>) => [...userKeys.lists(), { filters }] as const,
   details: () => [...userKeys.all, 'detail'] as const,
-  detail: (id: number) => [...userKeys.details(), id] as const,
+  detail: (id: string) => [...userKeys.details(), id] as const,
 };
 
 export function useUsers() {
@@ -18,7 +18,7 @@ export function useUsers() {
   });
 }
 
-export function useUser(id: number) {
+export function useUser(id: string) {
   return useQuery({
     queryKey: userKeys.detail(id),
     queryFn: () => api.getUserById(id),
@@ -30,14 +30,14 @@ export function useUpdateUser() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ id, data }: { id: number; data: UpdateUserData }) =>
+    mutationFn: ({ id, data }: { id: string; data: UpdateUserData }) =>
       api.updateUser(id, data),
     onSuccess: (updatedUser, { id }) => {
       queryClient.setQueryData(userKeys.detail(id), updatedUser);
       queryClient.invalidateQueries({ queryKey: userKeys.lists() });
 
       const currentUser = queryClient.getQueryData(authKeys.user);
-      if (currentUser && (currentUser as { id: number }).id === id) {
+      if (currentUser && (currentUser as { id: string }).id === id) {
         const { password: _password, ...authUser } = updatedUser;
         void _password;
         queryClient.setQueryData(authKeys.user, authUser);

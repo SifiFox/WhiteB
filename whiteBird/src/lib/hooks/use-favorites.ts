@@ -3,10 +3,10 @@ import { api } from '@/app/api/api';
 
 export const favoriteKeys = {
   all: ['favorites'] as const,
-  byUser: (userId: number) => [...favoriteKeys.all, 'user', userId] as const,
+  byUser: (userId: string) => [...favoriteKeys.all, 'user', userId] as const,
 };
 
-export function useFavorites(userId: number) {
+export function useFavorites(userId: string) {
   return useQuery({
     queryKey: favoriteKeys.byUser(userId),
     queryFn: () => api.getFavorites(userId),
@@ -18,7 +18,7 @@ export function useToggleFavorite() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ userId, postId }: { userId: number; postId: number }) => {
+    mutationFn: async ({ userId, postId }: { userId: string; postId: string }) => {
       const favorites = await api.getFavorites(userId);
       const existingFavorite = favorites.find(f => f.postId === postId);
 
@@ -36,7 +36,7 @@ export function useToggleFavorite() {
   });
 }
 
-export function useIsFavorite(userId: number, postId: number) {
+export function useIsFavorite(userId: string, postId: string) {
   const { data: favorites = [] } = useFavorites(userId);
   return favorites.some(f => f.postId === postId);
 }

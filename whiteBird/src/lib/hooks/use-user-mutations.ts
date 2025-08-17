@@ -14,7 +14,7 @@ export function useUserMutations({ isCurrentUser, onSuccess }: UseUserMutationsP
   const updateProfile = useUpdateProfile();
 
   const updateAnyUser = useMutation({
-    mutationFn: async (data: { id: number; updateData: UpdateUserData }) => {
+    mutationFn: async (data: { id: string; updateData: UpdateUserData }) => {
       return api.updateUser(data.id, data.updateData);
     },
     onSuccess: () => {
@@ -22,7 +22,7 @@ export function useUserMutations({ isCurrentUser, onSuccess }: UseUserMutationsP
     },
   });
 
-  const handleUpdate = async (userId: number, updateData: UpdateUserData) => {
+  const handleUpdate = async (userId: string, updateData: UpdateUserData) => {
     try {
       if (isCurrentUser) {
         await updateProfile.mutateAsync({ id: userId, updateData });

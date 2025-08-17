@@ -79,6 +79,20 @@ export function FormSignIn({ onSuccess }: FormSignInProps) {
         {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
         Войти
       </Button>
+
+      <div className="flex flex-col gap-2 text-sm text-muted-foreground ">
+        <p>Тестовые учетки: </p>
+        <div className="flex gap-2">
+          <span>admin:</span>
+          <span className="font-medium">Bret</span>
+          <span className="font-medium">admin123</span>
+        </div>
+        <div className="flex gap-2">
+          <span>user:</span>
+          <span className="font-medium">Antonette</span>
+          <span className="font-medium">password123</span>
+        </div>
+      </div>
     </form>
   );
 }

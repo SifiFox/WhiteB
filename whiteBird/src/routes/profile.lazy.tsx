@@ -3,6 +3,7 @@ import { useCurrentUser } from '@/lib/hooks';
 import { Button } from '@/components/ui/button';
 import { withProfileAsyncState } from '@/components/hoc/with-async-state';
 import { DialogEditProfile } from '@/components/ui/dialogs/dialog-edit-profile';
+import { FavoritePosts } from '@/components/widgets/profile/favorite-posts';
 import { Users, Settings, Calendar, Mail, Phone, Globe, User } from 'lucide-react';
 import type { AuthUser } from '@/lib/types';
 
@@ -13,7 +14,7 @@ interface ProfileContentProps {
 function ProfileContent({ user }: ProfileContentProps) {
   return (
     <div className="container mx-auto p-6 max-w-4xl">
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex items-center justify-between mb-8 flex-col gap-4 md:flex-row">
         <h1 className="text-3xl font-bold">Личный кабинет</h1>
         {user.isAdmin && (
           <Button asChild variant="outline" className="gap-2">
@@ -27,23 +28,18 @@ function ProfileContent({ user }: ProfileContentProps) {
 
       <div className="grid gap-6">
         <div className="bg-card rounded-lg p-6 shadow-sm border">
-          <div className="flex items-start gap-6">
+          <div className="flex items-start flex-col md:flex-row gap-6">
             <div className="relative">
               <img
                 src={user.avatar}
                 alt={user.name}
                 className="w-24 h-24 rounded-full object-cover border-4 border-background shadow-lg"
               />
-              {user.isAdmin && (
-                <div className="absolute -bottom-1 -right-1 bg-primary text-primary-foreground rounded-full p-1">
-                  <Settings className="h-3 w-3" />
-                </div>
-              )}
             </div>
 
             <div className="flex-1 min-w-0">
-              <div className="flex items-start justify-between mb-4">
-                <div>
+              <div className="flex items-start justify-between mb-4 flex-col md:flex-row gap-4">
+                <div className="w-full md:w-fit">
                   <h2 className="text-2xl font-bold mb-1">{user.name}</h2>
                   <p className="text-muted-foreground mb-2 flex items-center gap-1">
                     <User className="h-4 w-4" />
@@ -56,7 +52,7 @@ function ProfileContent({ user }: ProfileContentProps) {
                   )}
                 </div>
                 <DialogEditProfile user={user}>
-                  <Button variant="outline" className="gap-2">
+                  <Button variant="outline" className="gap-2 w-full md:w-fit">
                     <Settings className="h-4 w-4" />
                     Редактировать
                   </Button>
@@ -152,6 +148,8 @@ function ProfileContent({ user }: ProfileContentProps) {
             </div>
           </div>
         </div>
+
+        <FavoritePosts user={user} />
       </div>
     </div>
   );

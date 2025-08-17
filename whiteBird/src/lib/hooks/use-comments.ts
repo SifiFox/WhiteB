@@ -4,10 +4,10 @@ import type { CreateCommentData } from '../types';
 
 export const commentKeys = {
   all: ['comments'] as const,
-  byPost: (postId: number) => [...commentKeys.all, 'post', postId] as const,
+  byPost: (postId: string) => [...commentKeys.all, 'post', postId] as const,
 };
 
-export function useComments(postId: number) {
+export function useComments(postId: string) {
   return useQuery({
     queryKey: commentKeys.byPost(postId),
     queryFn: () => api.getCommentsByPostId(postId),

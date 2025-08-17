@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { api } from '@/app/api/api';
-import type { LoginData, RegisterData } from '../types';
+import type { LoginData, RegisterData, UpdateUserData } from '../types';
 
 export const authKeys = {
   user: ['auth', 'user'] as const,
@@ -72,7 +72,7 @@ export function useUpdateProfile() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (data: { id: number; updateData: any }) => {
+    mutationFn: async (data: { id: string; updateData: UpdateUserData }) => {
       return api.updateUser(data.id, data.updateData);
     },
     onSuccess: () => {

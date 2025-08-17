@@ -7,7 +7,7 @@ export const postKeys = {
   lists: () => [...postKeys.all, 'list'] as const,
   list: (filters: Record<string, unknown>) => [...postKeys.lists(), { filters }] as const,
   details: () => [...postKeys.all, 'detail'] as const,
-  detail: (id: number) => [...postKeys.details(), id] as const,
+  detail: (id: string) => [...postKeys.details(), id] as const,
 };
 
 export function usePosts(params?: Record<string, string | number>) {
@@ -17,7 +17,7 @@ export function usePosts(params?: Record<string, string | number>) {
   });
 }
 
-export function usePost(id: number) {
+export function usePost(id: string) {
   return useQuery({
     queryKey: postKeys.detail(id),
     queryFn: () => api.getPostById(id),
@@ -40,7 +40,7 @@ export function useUpdatePost() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ id, data }: { id: number; data: Partial<Post> }) =>
+    mutationFn: ({ id, data }: { id: string; data: Partial<Post> }) =>
       api.updatePost(id, data),
     onSuccess: (_, { id }) => {
       queryClient.invalidateQueries({ queryKey: postKeys.detail(id) });
@@ -53,7 +53,7 @@ export function useDeletePost() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (id: number) => api.deletePost(id),
+    mutationFn: (id: string) => api.deletePost(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: postKeys.lists() });
     },

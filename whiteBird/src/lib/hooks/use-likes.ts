@@ -4,9 +4,9 @@ import { postKeys } from './use-posts';
 
 export const likeKeys = {
   all: ['likes'] as const,
-  byPost: (postId: number) => [...likeKeys.all, 'post', postId] as const,
+  byPost: (postId: string) => [...likeKeys.all, 'post', postId] as const,
 };
-export function useLikes(postId: number) {
+export function useLikes(postId: string) {
   return useQuery({
     queryKey: likeKeys.byPost(postId),
     queryFn: () => api.getLikes(postId),
@@ -23,8 +23,8 @@ export function useToggleLike() {
       postId,
       type,
     }: {
-      userId: number;
-      postId: number;
+      userId: string;
+      postId: string;
       type: 'like' | 'dislike'
     }) => {
       const likes = await api.getLikes(postId);
