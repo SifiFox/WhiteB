@@ -1,9 +1,9 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { usePost } from '@/lib/hooks/use-posts';
 import { Post } from '@/components/widgets/post/post';
-import { PostNotFound } from '@/components/widgets/post/post-not-found';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
+import { withPostDetailAsyncState } from '@/components/hoc/with-async-state';
 import type { Post as PostType } from '@/lib/types';
 
 export const Route = createFileRoute('/posts_/$postId')({
@@ -30,25 +30,17 @@ function PostDetailContent({ post }: PostDetailContentProps) {
   );
 }
 
+const PostDetailWithAsyncState = withPostDetailAsyncState(PostDetailContent);
+
 function PostDetailPage() {
   const { postId } = Route.useParams();
-  const { data: post, isLoading } = usePost(postId);
+  const { data: post, isLoading, error } = usePost(postId);
 
-  if (isLoading) {
-    return (
-      <div className="flex justify-center items-center min-h-[400px]">
-        <div className="flex flex-col items-center gap-3">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-          <div className="text-lg text-muted-foreground">Загрузка поста...</div>
-        </div>
-      </div>
-    );
-  }
-
-  if (!post) {
-    return <PostNotFound />;
-  }
-
-  // Показываем пост
-  return <PostDetailContent post={post} />;
+  return (
+    <PostDetailWithAsyncState
+      isLoading={isLoading}
+      error={error || (!post ? new Error(`Пост с ID ${postId} не существует или был удален`) : null)}
+      post={post!}
+    />
+  );
 }

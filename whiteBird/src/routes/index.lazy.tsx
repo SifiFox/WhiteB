@@ -161,7 +161,7 @@ function Index() {
 
               <Button asChild variant="outline" size="lg" className="text-lg px-8">
                 <a
-                  href="https://github.com"
+                  href="https://github.com/SifiFox/WhiteB"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="gap-2"

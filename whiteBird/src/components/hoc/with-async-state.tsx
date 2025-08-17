@@ -1,4 +1,7 @@
 import { type ComponentType } from 'react';
+import { Button } from '../ui/button';
+import { Link } from '@tanstack/react-router';
+import { ArrowLeft } from 'lucide-react';
 
 interface AsyncStateProps {
   isLoading?: boolean;
@@ -11,6 +14,8 @@ interface WithAsyncStateOptions {
   errorMessage?: string;
   minHeight?: string;
   showErrorDetails?: boolean;
+  goBackTitle?: string;
+  goBackUrl?: string;
 }
 
 export function withAsyncState<T extends object>(
@@ -22,6 +27,8 @@ export function withAsyncState<T extends object>(
     errorMessage = 'Произошла ошибка',
     minHeight = 'min-h-[400px]',
     showErrorDetails = true,
+    goBackTitle = 'Назад',
+    goBackUrl = '/',
   } = options;
 
   return function WrappedComponent(props: T & AsyncStateProps) {
@@ -33,6 +40,12 @@ export function withAsyncState<T extends object>(
           <div className="flex flex-col items-center gap-3">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
             <div className="text-lg text-muted-foreground">{loadingMessage}</div>
+            <Button asChild className="gap-2">
+              <Link to={goBackUrl}>
+                <ArrowLeft className="h-4 w-4" />
+                {goBackTitle}
+              </Link>
+            </Button>
           </div>
         </div>
       );
@@ -48,6 +61,12 @@ export function withAsyncState<T extends object>(
                 {error instanceof Error ? error.message : 'Неизвестная ошибка'}
               </div>
             )}
+            <Button asChild className="gap-2">
+              <Link to={goBackUrl}>
+                <ArrowLeft className="h-4 w-4" />
+                {goBackTitle}
+              </Link>
+            </Button>
           </div>
         </div>
       );
@@ -61,6 +80,8 @@ export const withUsersAsyncState = <T extends object>(Component: ComponentType<T
   withAsyncState(Component, {
     loadingMessage: 'Загрузка пользователей...',
     errorMessage: 'Ошибка загрузки пользователей',
+    goBackTitle: 'Вернуться к профилю',
+    goBackUrl: '/profile',
   });
 
 export const withPostsAsyncState = <T extends object>(Component: ComponentType<T>) =>
@@ -85,7 +106,9 @@ export const withCommentsAsyncState = <T extends object>(Component: ComponentTyp
 export const withPostDetailAsyncState = <T extends object>(Component: ComponentType<T>) =>
   withAsyncState(Component, {
     loadingMessage: 'Загрузка поста...',
-    errorMessage: 'Пост не найден',
+    errorMessage: 'Пост не найден, либо произошла ошибка при получении поста',
     minHeight: 'min-h-[400px]',
     showErrorDetails: false,
+    goBackTitle: 'Вернуться ко всем постам',
+    goBackUrl: '/posts',
   });
